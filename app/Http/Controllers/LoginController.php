@@ -26,11 +26,11 @@ class LoginController extends Controller
             'usuario'=>'email',
             'senha'=>'required'
         ];
-        $erro =[
+        $feedback =[
             'usuario.email' => 'O campo email ta errado',
             'senha.required' => 'O campo da senha é necessário',
         ];
-        $request->validate($regras,$erro);
+        $request->validate($regras,$feedback);
 
 
         $email = $request->get('usuario');

@@ -195,3 +195,16 @@
         margin: 0px 15px 0px 15px;
     }
 
+    .pagination li{
+        display: inline;
+        margin-left: 5px
+    };
+
+    .active{
+        color: red;
+    }
+
+    .pagination ul{
+        list-style-type: none;
+    };
+
