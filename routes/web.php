@@ -40,8 +40,10 @@ Route::middleware('autenticacao:ldap,visitantes,noggers')->prefix('/app')->group
         Route::get('/excluir{id}', 'FornecedorController@excluir')->name('app.fornecedor.excluir');
     });
     
-
-    Route::resource('/produto','ProdutoController'); 
+    //produtos
+    Route::resource('/produto','ProdutoController');
+    //ProdutosDetalhe 
+    Route::resource('/produto_detalhe','ProdutoDetalheController'); 
     
 });
 Route::get('/rotateste/{p1}/{p2}', 'TesteController@teste')->name('teste');

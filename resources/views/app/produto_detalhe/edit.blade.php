@@ -1,0 +1,30 @@
+@extends('app.layouts.basico')
+@section('titulo', 'Editar Poduto Detalhes')
+
+@section('conteudo')
+
+<div class="conteudo-pagina">
+
+    <div class="titulo-pagina-2">
+        <p>Produtos Detalhes - Editar</p>
+    </div>
+
+    <div class="menu">
+        <ul>
+            <li><a href="">Novo</a></li>
+            <li><a href="">Consulta</a></li>
+        </ul>
+    </div>
+
+    <div class="informacao-pagina">
+        <div style="width: 40%; margin-left:auto; margin-right:auto;">
+            @component('app.produto_detalhe._components.form_create_edit', ['produto_detalhe'=> $produto_detalhe, 'unidade' => $unidade])
+                
+            @endcomponent            
+        </div>
+    </div>
+    
+
+</div>
+
+@endsection
