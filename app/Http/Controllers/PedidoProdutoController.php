@@ -1,20 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Cliente;
 
-class ClienteController extends Controller
+use Illuminate\Http\Request;
+use App\Pedido;
+use App\Produto;
+
+class PedidoProdutoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $clientes = Cliente::paginate(5);
-        return view('app.cliente.index', ['clientes'=>$clientes, 'request'=>$request->all()]);
+        //
     }
 
     /**
@@ -22,9 +23,10 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Pedido $pedido)
     {
-        return view('app.cliente.create');
+        $produto = Produto::all();
+        return view('app.pedido_produto.create', compact('pedido','produto'));
     }
 
     /**
@@ -33,21 +35,9 @@ class ClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Pedido $pedido)
     {
-        $regras = [
-            'nome' => 'required|min:3|max:40'
-        ];
-        $feedback = [
-            'required' => 'O campo :attribute deve ser preenchido',
-            'nome.min' => 'O campo deve ter no mínimo 3 caracteres',
-            'nome.max' => 'O campo deve ter no máximo 40 caracteres',
-        ];
-        $request->validate($regras,$feedback);
-        $cliente = new \App\Cliente();
-        $cliente->nome = $request->input('nome');
-        $cliente->save();
-        return redirect()->route('cliente.index');
+        echo $pedido->id.'-'.$request->get('produto_id');
 
     }
 
@@ -57,22 +47,20 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente $cliente)
+    public function show($id)
     {
-
-        return view('app.cliente.show', ['cliente' => $cliente]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  App\Cliente
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente $cliente)
+    public function edit($id)
     {
-        
-        return view('app.cliente.edit', compact('cliente'));
+        //
     }
 
     /**

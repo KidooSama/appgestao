@@ -10,6 +10,14 @@
 
     @endif
         
+        <select name="fornecedor_id" class="borda-preta" placeholder="Unidade"> 
+            <option value="">-- Selecione um fornecedor</option>
+            @foreach ($fornecedores as $fornecedor)
+                <option value="{{$fornecedor->id}}" {{($produto->fornecedor_id ?? old('fornecedor_id')) == $fornecedor->id ? 'selected': ''}}>{{$fornecedor->nome}}</option>
+            @endforeach                                   
+        </select>
+        {{$errors->has('fornecedor_id') ? $errors->first('fornecedor_id') : ''}}
+
         <input name="nome" value="{{$produto->nome ?? old('nome')}}" type="text" class="borda-preta" placeholder="Nome">
         {{$errors->has('nome') ? $errors->first('nome') : ''}}
 

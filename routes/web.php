@@ -44,6 +44,13 @@ Route::middleware('autenticacao:ldap,visitantes,noggers')->prefix('/app')->group
     Route::resource('/produto','ProdutoController');
     //ProdutosDetalhe 
     Route::resource('/produto_detalhe','ProdutoDetalheController'); 
+    //Cliente
+    Route::resource('/cliente','ClienteController'); 
+    //Pedido
+    Route::resource('/pedido','PedidoController'); 
+    //Pedido_Produtos
+    Route::get('/pedido_produto/{pedido}','PedidoProdutoController@create')->name('pedido-produto.create'); 
+    Route::post('/pedido_produto/{pedido}','PedidoProdutoController@store')->name('pedido-produto.store');; 
     
 });
 Route::get('/rotateste/{p1}/{p2}', 'TesteController@teste')->name('teste');

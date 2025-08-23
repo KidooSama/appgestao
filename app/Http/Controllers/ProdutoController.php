@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Produto;
 use App\ProdutoDetalhe;
+use App\Fornecedor;
 use Illuminate\Http\Request;
 use App\Unidade;
 use App\Item;
@@ -31,8 +32,9 @@ class ProdutoController extends Controller
      */
     public function create()
     {
+        $fornecedores = Fornecedor::all();
         $unidade = Unidade::all();
-        return view('app.produto.create', ['unidade'=> $unidade]);
+        return view('app.produto.create', ['unidade'=> $unidade, 'fornecedores' => $fornecedores]);
     }
 
     /**
@@ -48,7 +50,8 @@ class ProdutoController extends Controller
                 'nome' => 'required|max:40|min:3',
                 'descricao' => 'required|min:3|max:2000',
                 'peso' => 'required|integer',
-                'unidade_id' => 'exists:unidades,id'
+                'unidade_id' => 'exists:unidades,id',
+                'fornecedor_id' => 'exists:fornecedores,id',
         ];
         $feedback = [
                 'required' => 'O campo :attribute deve ser preenchido',
@@ -58,10 +61,11 @@ class ProdutoController extends Controller
                 'descricao.max' => 'O campo descrição deve ter no máximo 40 caracteres',
                 'peso.integer' => 'O campo peso deve ser um valor inteiro',
                 'unidade_id.exists' => 'A unidade de medida não existe',
+                'fornecedor_id.exists' => 'O fornecedor não existe',
                 
         ];
         $request->validate($regras,$feedback);
-        Produto::create($request->all());
+        Item::create($request->all());
         return redirect()->route('produto.index', ['request'=>$request->all()]);
         
     }
@@ -69,10 +73,10 @@ class ProdutoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Produto  $produto
+     * @param  \App\Item  $produto
      * @return \Illuminate\Http\Response
      */
-    public function show(Produto $produto)
+    public function show(Item $produto)
     {
         return view('app.produto.show', ['produto'=> $produto]);
     }
@@ -85,8 +89,9 @@ class ProdutoController extends Controller
      */
     public function edit(Produto $produto)
     {
+        $fornecedores = Fornecedor::all();
         $unidade = Unidade::all();
-        return view('app.produto.edit', ['produto'=> $produto, 'unidade' => $unidade]);
+        return view('app.produto.edit', ['produto'=> $produto, 'unidade' => $unidade, 'fornecedores' => $fornecedores]);
         
     }
 
@@ -94,10 +99,10 @@ class ProdutoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Produto  $produto
+     * @param  \App\Item  $produto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produto $produto)
+    public function update(Request $request, Item $produto)
     {
         $regras = [
                 'nome' => 'required|max:40|min:3',

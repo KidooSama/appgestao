@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
+use App\Pedido;
 use App\Cliente;
 
-class ClienteController extends Controller
+class PedidoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +15,8 @@ class ClienteController extends Controller
      */
     public function index(Request $request)
     {
-        $clientes = Cliente::paginate(5);
-        return view('app.cliente.index', ['clientes'=>$clientes, 'request'=>$request->all()]);
+        $pedidos = Pedido::paginate(10);
+        return view('app.pedido.index',['pedidos' => $pedidos, 'request' => $request->all()] );
     }
 
     /**
@@ -24,7 +26,10 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return view('app.cliente.create');
+
+
+        $clientes = Cliente::all();
+        return view('app.pedido.create', ['clientes' => $clientes]);
     }
 
     /**
@@ -36,19 +41,18 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $regras = [
-            'nome' => 'required|min:3|max:40'
+          'cliente_id' => 'exists:clientes,id'  
         ];
-        $feedback = [
-            'required' => 'O campo :attribute deve ser preenchido',
-            'nome.min' => 'O campo deve ter no mínimo 3 caracteres',
-            'nome.max' => 'O campo deve ter no máximo 40 caracteres',
+        $feedback =[
+            'cliente_id.exist' => 'O cliente informado não existe'
         ];
-        $request->validate($regras,$feedback);
-        $cliente = new \App\Cliente();
-        $cliente->nome = $request->input('nome');
-        $cliente->save();
-        return redirect()->route('cliente.index');
+        $request->validate($regras, $feedback);
 
+        $pedido = new Pedido();
+        $pedido->cliente_id = $request->get('cliente_id');
+        $pedido->save();
+
+        return redirect()->route('pedido.index');
     }
 
     /**
@@ -57,22 +61,20 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente $cliente)
+    public function show(Pedido $pedidos)
     {
-
-        return view('app.cliente.show', ['cliente' => $cliente]);
+        return view('app.pedido.show', ['pedidos' => $pedidos]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  App\Cliente
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente $cliente)
+    public function edit($id)
     {
-        
-        return view('app.cliente.edit', compact('cliente'));
+        //
     }
 
     /**

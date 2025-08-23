@@ -39,6 +39,35 @@
                             <td><a href="{{route('app.fornecedor.excluir', $forns->id)}}">Excluir</a></td>
                             <td><a href="{{route('app.fornecedor.editar', $forns->id)}}">Editar</a></td>
                         </tr>
+                        <tr>
+                            <td colspan="6">
+                                <p>Lista de Produtos</p>
+                                <table border="1" style="margin=">
+                                    <thead>
+                                        <tr>
+                                            <td>ID</td>
+                                            <td>Nome</td>
+                                            <td>Descrição</td>
+                                            <td>Peso</td>
+                                            <td>Unidade</td>
+                                            <td>Fornecedor ID</td>
+                                        </tr>
+                                        <tbody>
+                                            @foreach ($forns->produtos as $produto)
+                                                <tr>
+                                                    <td>{{$produto->id}}</td>
+                                                    <td>{{$produto->nome}}</td>
+                                                    <td>{{$produto->descricao}}</td>
+                                                    <td>{{$produto->peso}}</td>
+                                                    <td>{{$produto->unidade_id}}</td>
+                                                    <td>{{$produto->fornecedor_id}}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </thead>
+                                </table>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>    
