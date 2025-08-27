@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Pedido;
 use App\Produto;
+use App\PedidoProduto;
 
 class PedidoProdutoController extends Controller
 {
@@ -37,7 +38,15 @@ class PedidoProdutoController extends Controller
      */
     public function store(Request $request, Pedido $pedido)
     {
-        echo $pedido->id.'-'.$request->get('produto_id');
+
+
+        $pedido_produto = new PedidoProduto;
+        $pedido_produto->pedido_id = $pedido->id;
+        $pedido_produto->produto_id = $request->get('produto_id');
+        $pedido_produto->save();
+
+        return redirect()->route('pedido-produto.create', ['pedido'=> $pedido->id]);
+
 
     }
 
