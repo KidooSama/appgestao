@@ -42,9 +42,9 @@
                             <td>{{$produto->fornecedor->nome}}</td>
                             <td>{{$produto->peso}}</td>
                             <td>{{$produto->unidade_id}}</td>
-                            <td>{{$produto->itemDetalhe->comprimento ?? ''}}</td>
-                            <td>{{$produto->itemDetalhe->altura ?? ''}}</td>
-                            <td>{{$produto->itemDetalhe->largura ?? ''}}</td>
+                            <td>{{$produto->itemDetalhe->comprimento ?? 'N/A'}}</td>
+                            <td>{{$produto->itemDetalhe->altura ?? 'N/A'}}</td>
+                            <td>{{$produto->itemDetalhe->largura ?? 'N/A'}}</td>
                             
                             <td><a href="{{route('produto.show',['produto'=>$produto->id])}}">Vizualizar</a></td>
                             <td>
@@ -63,8 +63,17 @@
                             </td>
                             <td><a href="{{route('produto.edit',['produto'=>$produto->id])}}">Editar</a></td>
                         </tr>
+                        <tr>
+                            <td colspan="12">
+                                <p>Pedidos</p>
+                                @foreach ($produto->pedidos as $pedido)
+                                     {{ $pedido}} <br>
+                                @endforeach
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
+
             </table>    
             
             {{ $produtos->appends($request)->links()}}
