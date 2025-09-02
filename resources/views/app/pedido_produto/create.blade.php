@@ -28,6 +28,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Nome do Produto</th>
+                        <th>Data de Criação</th>
 
                     </tr>
                 </thead>
@@ -36,8 +37,10 @@
                         <tr>
                             <td>{{$produtos->id}}</td>
                             <td>{{$produtos->nome}}</td>
+                            <td>{{$produtos->pivot->created_at->format('d/m/y')}}</td>
                         </tr>
                     @endforeach
+                    
                 </tbody>
             </table>
             @component('app.pedido_produto._components.form_create', ['pedido' => $pedido, 'produto' => $produto])
