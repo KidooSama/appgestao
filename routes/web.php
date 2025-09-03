@@ -51,6 +51,7 @@ Route::middleware('autenticacao:ldap,visitantes,noggers')->prefix('/app')->group
     //Pedido_Produtos
     Route::get('/pedido_produto/{pedido}','PedidoProdutoController@create')->name('pedido-produto.create'); 
     Route::post('/pedido_produto/{pedido}','PedidoProdutoController@store')->name('pedido-produto.store');; 
+    Route::delete('/pedido_produto.destroy/{pedido}/{produto}','PedidoProdutoController@destroy')->name('pedido-produto.destroy');; 
     
 });
 Route::get('/rotateste/{p1}/{p2}', 'TesteController@teste')->name('teste');

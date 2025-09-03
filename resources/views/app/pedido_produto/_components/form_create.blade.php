@@ -9,7 +9,7 @@
         @endforeach                                   
     </select>
     {{ $errors->has('produto_id') ? $errors->first('produto_id') : ''}}
-    
-
+    <input type="number" name="quantidade" class="borda-preta" value="{{old('quantidade') ? old('quantidade') : ''}}" placeholder="Insira a quantidade">
+    {{ $errors->has('quantidade') ? $errors->first('quantidade') : ''}}
     <button type="submit" class="borda-preta">Adicionar</button>
 </form>
